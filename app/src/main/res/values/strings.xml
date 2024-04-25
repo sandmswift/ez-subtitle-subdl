@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ez-subtitle-subdl</string>
+    <string name="reset">Reset</string>
+    <string name="submit">Submit</string>
+    <string name="file_name_tip">Please input file name</string>
+    <string name="file_type">Please input file type</string>
+    <string name="language_tip">Please input language</string>
+    <string name="download">Download</string>
+</resources>

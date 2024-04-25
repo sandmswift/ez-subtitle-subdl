@@ -1,0 +1,70 @@
+<!-- activity_main.xml -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/edit_text_movie_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="knox goes away"
+            android:hint="@string/file_name_tip" />
+
+        <EditText
+            android:id="@+id/edit_text_movie_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="movie"
+            android:hint="@string/file_type" />
+
+        <EditText
+            android:id="@+id/edit_text_movie_language"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="En"
+            android:hint="@string/language_tip" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_clear"
+                style="@style/CommonTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reset" />
+
+            <Button
+                android:id="@+id/btn_submit"
+                style="@style/CommonTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/submit" />
+
+            <Button
+                android:id="@+id/btn_download"
+                style="@style/CommonTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/download" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_margin_top" />
+
+    </LinearLayout>
+</layout>
