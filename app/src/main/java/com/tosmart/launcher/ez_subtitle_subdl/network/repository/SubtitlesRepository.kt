@@ -6,6 +6,7 @@ import com.tosmart.launcher.ez_subtitle_subdl.network.domain.SubtitleResult
 import com.tosmart.launcher.ez_subtitle_subdl.network.domain.network.api.DownloadApi
 import com.tosmart.launcher.ez_subtitle_subdl.network.domain.network.api.SubtitleApi
 import com.tosmart.launcher.ez_subtitle_subdl.network.module.NetworkModule.API_KEY
+import com.tosmart.launcher.ez_subtitle_subdl.network.utils.filterFileName
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -59,7 +60,7 @@ class DownloadRepositoryImpl @Inject constructor(
 ) : DownloadRepository {
 
     override suspend fun downloadFile(filePath: String): SubtitleResult<ResponseBody> {
-        val response = downloadService.download(filePath)
+        val response = downloadService.download(filterFileName(filePath))
         if (response.isSuccessful && response.body() != null) {
             return SubtitleResult.success(response.body()!!)
         } else {

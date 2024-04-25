@@ -14,6 +14,8 @@ import java.io.IOException
  * @Description
  */
 
+const val SPLIT = "/"
+const val FILE_SUFFIX = "."
 
 /**
  * get external storage path and create subtitle file path
@@ -45,4 +47,24 @@ fun saveResponseBodyToFile(context: Context, fileName: String, responseBody: Res
         responseBody.close()
     }
     return false
+}
+
+fun removeFileExtension(fileName: String): String {
+    val lastDotIndex = fileName.lastIndexOf(FILE_SUFFIX)
+    return if (lastDotIndex != -1) {
+        fileName.substring(0, lastDotIndex)
+    } else {
+        fileName
+    }
+}
+
+fun filterFileName(fileName: String): String {
+    var path = fileName
+    if (path.contains(SPLIT)) {
+        val lastSplitIndex = path.lastIndexOf(SPLIT)
+        if (lastSplitIndex < path.length - 1) {
+            path = path.substring(lastSplitIndex + 1)
+        }
+    }
+    return removeFileExtension(path)
 }
