@@ -1,6 +1,7 @@
 package com.tosmart.launcher.ez_subtitle_subdl.ui.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,6 +32,10 @@ class SubtitleViewModel @Inject constructor(
     private val _programs = MutableLiveData<SubtitleResult<List<Subtitle>>>()
     val programs: LiveData<SubtitleResult<List<Subtitle>>> get() = _programs
 
+    companion object {
+        private const val SPILT = "/"
+    }
+
     fun getPrograms(filmName: String, type: String, language: String) {
         viewModelScope.launch {
             try {
@@ -44,7 +49,11 @@ class SubtitleViewModel @Inject constructor(
     fun downloadSubtitle(path: String, name: String) {
         viewModelScope.launch {
             try {
-                val downloadResponse = downloadRepository.downloadFile(path)
+                var requestPath = path
+                if (path.contains(SPILT)) {
+                    requestPath = path.substring(path.lastIndexOf(SPILT) + 1)
+                }
+                val downloadResponse = downloadRepository.downloadFile(requestPath)
                 if (downloadResponse is SubtitleResult.Success) {
                     saveResponseBodyToFile(appContext.applicationContext, name, downloadResponse.data)
                 }

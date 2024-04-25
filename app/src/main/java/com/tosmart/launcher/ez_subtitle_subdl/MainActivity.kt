@@ -1,7 +1,6 @@
 package com.tosmart.launcher.ez_subtitle_subdl
 
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.tosmart.launcher.ez_subtitle_subdl.databinding.ActivityMainBinding
 import com.tosmart.launcher.ez_subtitle_subdl.network.domain.Subtitle
@@ -54,10 +53,10 @@ class MainActivity : DaggerActivity() {
             if (mSubtitleList.isNotEmpty()) {
                 val subtitle = mSubtitleList[0]
                 val link = subtitle.url
-                Log.i(TAG, "link: " + link)
+                val fileName = mBinding.editTextMovieName.text.toString()
                 if (link.isNotEmpty()) {
-                    mSubtitleViewModel.downloadSubtitle(link, subtitle.name)
-                    mDownloadDialog.setSubtitle(subtitle, getExternalStoragePath(this, subtitle.name))
+                    mSubtitleViewModel.downloadSubtitle(link, fileName)
+                    mDownloadDialog.setSubtitle(subtitle, getExternalStoragePath(this, fileName))
                     mDownloadDialog.show(supportFragmentManager, "DownloadDialog")
                 }
             }
