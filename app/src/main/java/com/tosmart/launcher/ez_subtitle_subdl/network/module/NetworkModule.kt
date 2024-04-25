@@ -26,7 +26,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    const val API_KEY = "eoiN8S7STYTd43sCuXxpX0eLx1vPs9rq"
+    const val API_KEY = "your api key"
     private const val BASE_URL = "https://api.subdl.com/"
     private const val DOWNDLOAD_BASE_URL = "https://dl.subdl.com/"
 
