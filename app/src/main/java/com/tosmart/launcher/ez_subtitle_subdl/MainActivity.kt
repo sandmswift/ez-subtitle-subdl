@@ -55,7 +55,8 @@ class MainActivity : DaggerActivity() {
                 val link = subtitle.url
                 val fileName = mBinding.editTextMovieName.text.toString()
                 if (link.isNotEmpty()) {
-                    mSubtitleViewModel.downloadSubtitle(link, fileName)
+//                    mSubtitleViewModel.downloadSubtitle(link, fileName)
+                    mSubtitleViewModel.downloadFlowSubtitle(link, fileName)
                     mDownloadDialog.setSubtitle(subtitle, getExternalStoragePath(this, fileName))
                     mDownloadDialog.show(supportFragmentManager, "DownloadDialog")
                 }

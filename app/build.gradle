@@ -7,8 +7,9 @@ apply plugin: 'dagger.hilt.android.plugin'
 android {
     compileSdkVersion androidCompileSdkVersion
     defaultConfig {
-        applicationId "com.akshay.newsapp"
+        applicationId "com.tosmart.launcher.ez_subtitle_subdl"
         minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidTargetSdkVersion
         versionCode 4
         versionName "3.0.0"
         vectorDrawables.useSupportLibrary = true
@@ -117,4 +118,5 @@ dependencies {
 
     // Debug
     implementation "com.jakewharton.timber:timber:$timberVersion"
+    implementation "androidx.test.ext:junit-ktx:$androidjUnitVersion"
 }

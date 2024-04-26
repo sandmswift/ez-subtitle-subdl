@@ -1,17 +1,26 @@
 package com.tosmart.launcher.ez_subtitle_subdl.network.repository
 
 import android.os.Message
+import com.tosmart.launcher.ez_subtitle_subdl.network.domain.DownloadState
 import com.tosmart.launcher.ez_subtitle_subdl.network.domain.Subtitle
 import com.tosmart.launcher.ez_subtitle_subdl.network.domain.SubtitleResult
 import com.tosmart.launcher.ez_subtitle_subdl.network.domain.network.api.DownloadApi
 import com.tosmart.launcher.ez_subtitle_subdl.network.domain.network.api.SubtitleApi
 import com.tosmart.launcher.ez_subtitle_subdl.network.module.NetworkModule.API_KEY
 import com.tosmart.launcher.ez_subtitle_subdl.network.utils.filterFileName
+import com.tosmart.launcher.ez_subtitle_subdl.network.utils.saveToFile
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import okhttp3.ResponseBody
+import java.io.File
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,6 +36,7 @@ interface SubtitlesRepository {
 
 interface DownloadRepository {
     suspend fun downloadFile(filePath: String): SubtitleResult<ResponseBody>
+    suspend fun downloadFlowFile(filePath: String, file: File): Flow<DownloadState>
 }
 
 @Singleton
@@ -68,7 +78,25 @@ class DownloadRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun downloadFlowFile(filePath: String, file: File): Flow<DownloadState> {
+        return flow {
+            val response = downloadService.download(filterFileName(filePath))
+            if (response.isSuccessful) {
+                saveToFile(response.body()!!, file) {
+                    emit(DownloadState.InProgress(it))
+                }
+                emit(DownloadState.Success(file))
+            } else {
+                emit(DownloadState.Error(IOException(response.toString())))
+            }
+        }.catch {
+            emit(DownloadState.Error(it))
+        }.flowOn(Dispatchers.IO)
+
+    }
+
 }
+
 
 @Module
 @InstallIn(SingletonComponent::class)

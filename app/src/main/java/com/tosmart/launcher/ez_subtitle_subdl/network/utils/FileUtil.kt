@@ -68,3 +68,25 @@ fun filterFileName(fileName: String): String {
     }
     return removeFileExtension(path)
 }
+
+inline fun saveToFile(responseBody: ResponseBody, file: File, progressListener: (Int) -> Unit) {
+    val total = responseBody.contentLength()
+    var bytesCopied = 0
+    var emittedProgress = 0
+    file.outputStream().use { output ->
+        val input = responseBody.byteStream()
+        val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+        var bytes = input.read(buffer)
+        while (bytes >= 0) {
+            output.write(buffer, 0, bytes)
+            bytesCopied += bytes
+            bytes = input.read(buffer)
+            val progress = (bytesCopied * 100 / total).toInt()
+            if (progress - emittedProgress > 0) {
+                progressListener(progress)
+                emittedProgress = progress
+            }
+        }
+    }
+}
+

@@ -2,8 +2,8 @@
 
 buildscript {
     // Android SDK version
-    ext.androidMinSdkVersion = 31
-    ext.androidTargetSdkVersion = 31
+    ext.androidMinSdkVersion = 26
+    ext.androidTargetSdkVersion = 28
     ext.androidCompileSdkVersion = 31
 
     // Kotlin
@@ -45,7 +45,7 @@ buildscript {
 
     // Testing
     ext.jUnitVersion = '4.12'
-    ext.androidjUnitVersion = '1.1.2'
+    ext.androidjUnitVersion = '1.1.5'
     ext.mockitoKotlinVersion = '2.2.0'
     ext.archTestingVersion = '2.1.0'
     ext.espressoVersion = '3.1.0'
